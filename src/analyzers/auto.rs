@@ -122,7 +122,9 @@ fn collect_strings(bin: &Binary) -> Vec<Str> {
             .map(|(s, e)| Str {
                 place: place(s),
                 text: data[s..e]
-                    .chunks_exact(2)
+                    .as_chunks::<2>()
+                    .0
+                    .iter()
                     .map(|c| char::from(c[0]))
                     .collect(),
             }),

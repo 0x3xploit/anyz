@@ -764,15 +764,15 @@ fn parse_load_config(
 /// The PE image checksum algorithm (as computed by `CheckSumMappedFile`).
 fn pe_checksum(bytes: &[u8], checksum_off: usize) -> u32 {
     let mut sum: u64 = 0;
-    let mut chunks = bytes.chunks_exact(2);
-    for (i, w) in chunks.by_ref().enumerate() {
+    let (words, rest) = bytes.as_chunks::<2>();
+    for (i, &w) in words.iter().enumerate() {
         let pos = i * 2;
         if pos == checksum_off || pos == checksum_off + 2 {
             continue;
         }
-        sum += u64::from(u16::from_le_bytes([w[0], w[1]]));
+        sum += u64::from(u16::from_le_bytes(w));
     }
-    if let [last] = chunks.remainder() {
+    if let [last] = rest {
         sum += u64::from(*last);
     }
     while sum >> 16 != 0 {

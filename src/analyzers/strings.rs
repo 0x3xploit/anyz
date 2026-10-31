@@ -114,7 +114,9 @@ pub fn analyze(bin: &Binary, min_len: usize, utf16: bool) -> StringsReport {
     if utf16 {
         strings.extend(utf16_runs(data, min_len).into_iter().map(|(s, e)| {
             let text = data[s..e]
-                .chunks_exact(2)
+                .as_chunks::<2>()
+                .0
+                .iter()
                 .map(|c| char::from(c[0]))
                 .collect();
             found(s, text, Encoding::Utf16)

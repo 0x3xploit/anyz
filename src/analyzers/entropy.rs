@@ -9,14 +9,14 @@ pub fn shannon(data: &[u8]) -> f64 {
     }
     // Four interleaved histograms avoid store-to-load stalls on runs of equal bytes.
     let mut h = [[0u64; 256]; 4];
-    let mut chunks = data.chunks_exact(4);
-    for c in chunks.by_ref() {
+    let (chunks, rest) = data.as_chunks::<4>();
+    for c in chunks {
         h[0][c[0] as usize] += 1;
         h[1][c[1] as usize] += 1;
         h[2][c[2] as usize] += 1;
         h[3][c[3] as usize] += 1;
     }
-    for &b in chunks.remainder() {
+    for &b in rest {
         h[0][b as usize] += 1;
     }
     let len = data.len() as f64;
