@@ -1,0 +1,5 @@
+# Test fixtures are exact binaries (tests check their hashes): never touch them.
+tests/fixtures/bin/** binary
+
+*.sh text eol=lf
+*.cmd text eol=crlf

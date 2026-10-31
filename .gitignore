@@ -1,0 +1,5 @@
+/target
+/dist
+# fixture build scratch dirs (tests/fixtures/build.sh, build_msvc.cmd)
+/tests/fixtures/.build-tmp
+/tests/fixtures/.build-msvc

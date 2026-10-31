@@ -1,0 +1,45 @@
+[package]
+name = "anyz"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Fast all-in-one binary triage for ELF, PE and Mach-O (file + readelf + objdump + checksec + rabin2)"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+keywords = ["elf", "pe", "macho", "reverse-engineering", "ctf"]
+categories = ["command-line-utilities", "development-tools"]
+
+[dependencies]
+anyhow = "1.0.104"
+capstone = "0.14.0"
+clap = { version = "4.6.7", features = ["derive", "wrap_help"] }
+comfy-table = "8.0.1"
+cpp_demangle = "0.5.1"
+enable-ansi-support = "0.3.1"
+goblin = "0.10.7"
+md-5 = "0.11.0"
+memchr = "2.8.3"
+memmap2 = "0.9.12"
+owo-colors = "4.4.0"
+regex = "1.13.1"
+rustc-demangle = "0.1.28"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+sha1 = "0.11.0"
+sha2 = "0.11.1"
+thiserror = "2.0.21"
+unicode-width = "0.2.3"
+
+[dev-dependencies]
+serde_json = "1.0.154"
+
+# goblin does unchecked arithmetic on file-controlled values in a few places
+# (e.g. Mach-O LC_MAIN). Release builds wrap; make dev/test builds behave the
+# same so fuzzing only flags overflow bugs in anyz's own code.
+[profile.dev.package.goblin]
+overflow-checks = false
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

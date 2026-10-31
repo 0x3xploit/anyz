@@ -1,0 +1,6 @@
+LIBRARY fixture.dll
+EXPORTS
+    add_numbers @1
+    secret_function @2 NONAME
+    exported_data @3 DATA
+    TickCount = KERNEL32.GetTickCount @4

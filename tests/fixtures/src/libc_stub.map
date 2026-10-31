@@ -1,0 +1,6 @@
+GLIBC_2.2.5 {
+  global: puts; gets; printf; system; read; setvbuf; strcpy; exit; __libc_start_main; stdout; stdin;
+  local: *;
+};
+GLIBC_2.3.4 { global: __printf_chk; __strcpy_chk; } GLIBC_2.2.5;
+GLIBC_2.4 { global: __stack_chk_fail; } GLIBC_2.3.4;
